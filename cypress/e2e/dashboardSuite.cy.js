@@ -27,14 +27,20 @@ describe('Dashboard Page Suit', ()=>{
     it('Test-Case 7: Hide navigation menu', ()=>{
 
     cy.get('.oxd-main-menu-item').each(($el) => {
-      cy.wrap($el).should('not.have.class', 'toggle');
+        cy.wrap($el).should('not.have.class', 'toggle');
+        });
+        cy.get('.oxd-icon-button.oxd-main-menu-button').click();
+        cy.get('.oxd-main-menu-item').each(($el) => {
+        cy.wrap($el).should('have.class', 'toggle');
+        });
+
     });
 
-    cy.get('.oxd-icon-button.oxd-main-menu-button').click();
+    it.only('Test-Case 8:Transition through Quick Launch', ()=>{
 
-    cy.get('.oxd-main-menu-item').each(($el) => {
-      cy.wrap($el).should('have.class', 'toggle');
-    });
-
+        cy.get('.oxd-text.oxd-text--p').contains('Quick Launch').should('be.visible');
+        cy.get("button[title='Assign Leave']").click();
+        cy.url().should('contain', 'assignLeave');
+        cy.get('div.orangehrm-card-container > h6').should('have.text', 'Assign Leave');
     });
 });
